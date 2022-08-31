@@ -1,2 +1,2 @@
-# toma-gin
+# toma-web
 go-gin-web
