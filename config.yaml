@@ -1,0 +1,30 @@
+
+
+# system configuration
+system:
+  db-type: 'mysql'
+  addr: 9999
+  
+# zap logger configuration
+zap:
+  level: 'info'
+  format: 'json'  ## 日志输出方式 console OR json
+  prefix: '[TOMATO]'
+  director: 'log'
+  show-line: true
+  encode-level: 'LowercaseLevelEncoder'
+  stacktrace-key: 'stacktrace'
+  log-in-console: true
+
+# mysql connect configuration
+mysql:
+  path: '172.16.20.157'
+  port: '3306'
+  config: 'charset=utf8mb4,utf8&collation=utf8mb4_unicode_ci&parseTime=true'
+  db-name: 'tomato'
+  username: 'root'
+  password: 'photoprism'
+  max-idle-conns: 10
+  max-open-conns: 100
+  log-mode: ""
+  log-zap: false
