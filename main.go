@@ -19,7 +19,7 @@ func main() {
 		global.LOGGER.Info("数据库链接失败!")
 		return
 	}
-	global.LOGGER.Info("数据库链接成功%s!")
+	global.LOGGER.Info("数据库链接成功!")
 
 	if global.DB != nil {
 		// 数据库表的初始化
