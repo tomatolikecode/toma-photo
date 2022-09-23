@@ -1,8 +1,8 @@
 package initialize
 
 import (
-	"github.com/go-toma-web/internal/global"
-	"github.com/go-toma-web/internal/initialize/inner"
+	"github.com/toma-photo/internal/global"
+	"github.com/toma-photo/internal/initialize/inner"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )

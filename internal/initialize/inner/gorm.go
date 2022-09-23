@@ -5,7 +5,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/go-toma-web/internal/global"
+	"github.com/toma-photo/internal/global"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 )

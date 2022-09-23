@@ -3,7 +3,7 @@ package initialize
 import (
 	"os"
 
-	"github.com/go-toma-web/internal/global"
+	"github.com/toma-photo/internal/global"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
 )

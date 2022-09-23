@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/go-toma-web/internal/global"
-	"github.com/go-toma-web/internal/utils"
 	"github.com/natefinch/lumberjack"
+	"github.com/toma-photo/internal/global"
+	"github.com/toma-photo/internal/utils"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )

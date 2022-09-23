@@ -6,8 +6,8 @@ import (
 	"os"
 
 	"github.com/fsnotify/fsnotify"
-	"github.com/go-toma-web/internal/global"
 	"github.com/spf13/viper"
+	"github.com/toma-photo/internal/global"
 )
 
 // 配置文件基本配置

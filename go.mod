@@ -1,4 +1,4 @@
-module github.com/go-toma-web
+module github.com/toma-photo
 
 go 1.16
 

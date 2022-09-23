@@ -1,2 +1,2 @@
-# go-toma-web
+# toma-photo
 go-gin-web

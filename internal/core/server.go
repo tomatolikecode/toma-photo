@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/go-toma-web/internal/global"
-	"github.com/go-toma-web/internal/initialize"
+	"github.com/toma-photo/internal/global"
+	"github.com/toma-photo/internal/initialize"
 	"go.uber.org/zap"
 )
 

@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/go-toma-web/internal/core"
-	"github.com/go-toma-web/internal/global"
-	"github.com/go-toma-web/internal/initialize"
+	"github.com/toma-photo/internal/core"
+	"github.com/toma-photo/internal/global"
+	"github.com/toma-photo/internal/initialize"
 )
 
 func main() {

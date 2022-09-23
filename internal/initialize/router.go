@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/go-toma-web/internal/global"
+	"github.com/toma-photo/internal/global"
 )
 
 func Routers() *gin.Engine {
