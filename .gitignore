@@ -1,0 +1,7 @@
+
+# 日志目录
+/internal/log
+
+# 存储文件目录
+/internal/storage
+
