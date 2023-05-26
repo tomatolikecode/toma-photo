@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 	"github.com/toma-photo/internal/config"
+	"go.uber.org/zap"
 	"gorm.io/gorm"
 )
 
@@ -15,8 +16,9 @@ import (
 var (
 	db *gorm.DB
 
-	VIPER  *viper.Viper
-	CONFIG config.Server
+	VIPER   *viper.Viper
+	CONFIG  config.Server
+	ZAP_LOG *zap.Logger
 )
 
 func SetDB(newDB *gorm.DB) {

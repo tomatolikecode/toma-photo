@@ -14,4 +14,16 @@ mysql:
   max-open-conns: 100
   log-mode: ""
   log-zap: false
+
+# zap logger configuration
+zap:
+  level: debug
+  format: json
+  prefix: "[SYSTEM]"
+  director: log
+  show-line: true
+  max-age: 14
+  encode-level: LowercaseColorLevelEncoder
+  stacktrace-key: stacktrace
+  log-in-console: true
   

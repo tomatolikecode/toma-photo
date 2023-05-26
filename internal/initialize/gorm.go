@@ -1,10 +1,10 @@
 package initialize
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/toma-photo/internal/global"
+	"go.uber.org/zap"
 )
 
 // 注册数据库专用表
@@ -14,8 +14,8 @@ func MigrateTables() {
 	// 系统表
 	)
 	if err != nil {
-		fmt.Printf("[DB ERROR]: register table failed, %v\n", err.Error())
+		global.ZAP_LOG.Error("register table failed", zap.Error(err))
 		os.Exit(0)
 	}
-	fmt.Printf("register table success\n")
+	global.ZAP_LOG.Info("register table success")
 }
