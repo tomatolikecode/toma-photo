@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"time"
 
 	"github.com/toma-photo/internal/core"
 	"github.com/toma-photo/internal/global"
@@ -30,8 +29,5 @@ func main() {
 		db, _ := global.DB().DB()
 		defer db.Close()
 	}
-
-	global.ZAP_LOG.Info("SYSTEM UP!")
-	time.Sleep(time.Second * 3)
-	global.ZAP_LOG.Info("SYSTEM DOWN!")
+	core.RunServer()
 }
