@@ -50,6 +50,104 @@ const docTemplate = `{
                 }
             }
         },
+        "/user/changephone": {
+            "put": {
+                "description": "更换用户手机号, 原手机号验证修改",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户模块"
+                ],
+                "summary": "更换手机号",
+                "parameters": [
+                    {
+                        "description": "更换手机号",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/types.ChangeUserPhoneRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/user/changepwd": {
+            "put": {
+                "description": "修改用户密码, 通过手机号验证码修改, 通过原密码新密码验证修改",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户模块"
+                ],
+                "summary": "修改密码",
+                "parameters": [
+                    {
+                        "description": "修改密码",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/types.ChangeUserPasswordRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/user/info": {
             "get": {
                 "description": "获取用户信息",
@@ -78,7 +176,54 @@ const docTemplate = `{
                                             "type": "integer"
                                         },
                                         "data": {
-                                            "$ref": "#/definitions/response.UserInfoResponse"
+                                            "$ref": "#/definitions/types.UserInfoResponse"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "更新用户信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户模块"
+                ],
+                "summary": "更新用户信息",
+                "parameters": [
+                    {
+                        "description": "用户更新信息",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/types.UserUpdateInfoRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer"
                                         },
                                         "msg": {
                                             "type": "string"
@@ -108,7 +253,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.UserLogin"
+                            "$ref": "#/definitions/types.UserLoginRequest"
                         }
                     }
                 ],
@@ -127,7 +272,7 @@ const docTemplate = `{
                                             "type": "integer"
                                         },
                                         "data": {
-                                            "$ref": "#/definitions/response.UserLoginResponse"
+                                            "$ref": "#/definitions/types.UserLoginResponse"
                                         },
                                         "msg": {
                                             "type": "string"
@@ -216,6 +361,55 @@ const docTemplate = `{
                 }
             }
         },
+        "/user/recoverpwd": {
+            "put": {
+                "description": "找回密码",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户模块"
+                ],
+                "summary": "找回密码",
+                "parameters": [
+                    {
+                        "description": "找回密码",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/types.RecoverUserPasswordRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/user/register": {
             "post": {
                 "produces": [
@@ -232,7 +426,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.UserRegister"
+                            "$ref": "#/definitions/types.UserRegisterRequest"
                         }
                     }
                 ],
@@ -263,75 +457,6 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "request.UserLogin": {
-            "type": "object",
-            "required": [
-                "loginType"
-            ],
-            "properties": {
-                "loginType": {
-                    "description": "手机验证码或账号密码",
-                    "type": "string",
-                    "example": "登录类型 必填,phone/account"
-                },
-                "password": {
-                    "description": "账户密码登录, 密码",
-                    "type": "string",
-                    "example": "密码"
-                },
-                "phone": {
-                    "description": "手机号验证码登录, 手机号码",
-                    "type": "string",
-                    "example": "手机号"
-                },
-                "phoneCode": {
-                    "description": "手机验证码登录, 验证码",
-                    "type": "string",
-                    "example": "手机验证码"
-                },
-                "username": {
-                    "description": "账户密码登录, 用户名, 用户名支持手机号密码登录",
-                    "type": "string",
-                    "example": "用户名"
-                }
-            }
-        },
-        "request.UserRegister": {
-            "type": "object",
-            "required": [
-                "passWord",
-                "phone",
-                "phoneCode",
-                "username"
-            ],
-            "properties": {
-                "headerImg": {
-                    "type": "string",
-                    "example": "头像链接"
-                },
-                "nickName": {
-                    "type": "string",
-                    "example": "昵称"
-                },
-                "passWord": {
-                    "type": "string",
-                    "example": "密码"
-                },
-                "phone": {
-                    "type": "string",
-                    "example": "电话号码, 必填"
-                },
-                "phoneCode": {
-                    "description": "手机验证码登录, 验证码",
-                    "type": "string",
-                    "example": "手机号验证码"
-                },
-                "username": {
-                    "type": "string",
-                    "example": "用户名"
-                }
-            }
-        },
         "response.Response": {
             "type": "object",
             "properties": {
@@ -341,25 +466,6 @@ const docTemplate = `{
                 "data": {},
                 "msg": {
                     "type": "string"
-                }
-            }
-        },
-        "response.UserInfoResponse": {
-            "type": "object",
-            "properties": {
-                "user": {
-                    "$ref": "#/definitions/system.User"
-                }
-            }
-        },
-        "response.UserLoginResponse": {
-            "type": "object",
-            "properties": {
-                "token": {
-                    "type": "string"
-                },
-                "user": {
-                    "$ref": "#/definitions/system.User"
                 }
             }
         },
@@ -434,6 +540,187 @@ const docTemplate = `{
                 },
                 "username": {
                     "type": "string"
+                }
+            }
+        },
+        "types.ChangeUserPasswordRequest": {
+            "type": "object",
+            "properties": {
+                "changeType": {
+                    "type": "string",
+                    "example": "修改类型, 原密码修改(password), 手机验证码修改(phone)"
+                },
+                "newPassword": {
+                    "type": "string",
+                    "example": "新密码"
+                },
+                "newPasswordAgain": {
+                    "type": "string",
+                    "example": "新密码确认"
+                },
+                "oldPassword": {
+                    "type": "string",
+                    "example": "旧密码"
+                },
+                "phoneCode": {
+                    "type": "string",
+                    "example": "手机号验证码"
+                }
+            }
+        },
+        "types.ChangeUserPhoneRequest": {
+            "type": "object",
+            "properties": {
+                "newPhone": {
+                    "type": "string",
+                    "example": "新手机号码"
+                },
+                "newPhoneCode": {
+                    "type": "string",
+                    "example": "新手机验证码"
+                },
+                "oldPhoneCode": {
+                    "type": "string",
+                    "example": "旧手机的验证码"
+                }
+            }
+        },
+        "types.RecoverUserPasswordRequest": {
+            "type": "object",
+            "properties": {
+                "newPassword": {
+                    "type": "string",
+                    "example": "新密码"
+                },
+                "newPasswordAgain": {
+                    "type": "string",
+                    "example": "新密码确认"
+                },
+                "phone": {
+                    "type": "string",
+                    "example": "手机号"
+                },
+                "phoneCode": {
+                    "type": "string",
+                    "example": "手机号验证码"
+                }
+            }
+        },
+        "types.UserInfoResponse": {
+            "type": "object",
+            "properties": {
+                "user": {
+                    "$ref": "#/definitions/system.User"
+                }
+            }
+        },
+        "types.UserLoginRequest": {
+            "type": "object",
+            "required": [
+                "loginType"
+            ],
+            "properties": {
+                "loginType": {
+                    "description": "手机验证码或账号密码",
+                    "type": "string",
+                    "example": "登录类型 必填,phone/account"
+                },
+                "password": {
+                    "description": "账户密码登录, 密码",
+                    "type": "string",
+                    "example": "密码"
+                },
+                "phone": {
+                    "description": "手机号验证码登录, 手机号码",
+                    "type": "string",
+                    "example": "手机号"
+                },
+                "phoneCode": {
+                    "description": "手机验证码登录, 验证码",
+                    "type": "string",
+                    "example": "手机验证码"
+                },
+                "username": {
+                    "description": "账户密码登录, 用户名, 用户名支持手机号密码登录",
+                    "type": "string",
+                    "example": "用户名"
+                }
+            }
+        },
+        "types.UserLoginResponse": {
+            "type": "object",
+            "properties": {
+                "token": {
+                    "type": "string"
+                },
+                "user": {
+                    "$ref": "#/definitions/system.User"
+                }
+            }
+        },
+        "types.UserRegisterRequest": {
+            "type": "object",
+            "required": [
+                "passWord",
+                "phone",
+                "phoneCode",
+                "username"
+            ],
+            "properties": {
+                "headerImg": {
+                    "type": "string",
+                    "example": "头像链接"
+                },
+                "nickName": {
+                    "type": "string",
+                    "example": "昵称"
+                },
+                "passWord": {
+                    "type": "string",
+                    "example": "密码"
+                },
+                "phone": {
+                    "type": "string",
+                    "example": "电话号码, 必填"
+                },
+                "phoneCode": {
+                    "description": "手机验证码登录, 验证码",
+                    "type": "string",
+                    "example": "手机号验证码"
+                },
+                "username": {
+                    "type": "string",
+                    "example": "用户名"
+                }
+            }
+        },
+        "types.UserUpdateInfoRequest": {
+            "type": "object",
+            "properties": {
+                "city": {
+                    "type": "string",
+                    "example": "四川"
+                },
+                "country": {
+                    "type": "string",
+                    "example": "中国"
+                },
+                "headerImg": {
+                    "type": "string",
+                    "example": "头像链接"
+                },
+                "nickName": {
+                    "description": "ID        uint   ` + "`" + `json:\"-\"` + "`" + `",
+                    "type": "string",
+                    "example": "这是昵称"
+                },
+                "province": {
+                    "type": "string",
+                    "example": "成都"
+                },
+                "sex": {
+                    "type": "integer",
+                    "example": 1
                 }
             }
         }

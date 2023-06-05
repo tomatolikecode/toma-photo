@@ -20,7 +20,7 @@ type UserApi struct{}
 // @Summary 用户登录
 // @Description 用户登录, 账号密码登录, 手机验证码注册登录
 // @Produce   application/json
-// @Param    data  body  types.UserLogin  true  "登录类型, 用户名, 密码, 手机号, 验证码"
+// @Param    data  body  types.UserLoginRequest true  "登录类型, 用户名, 密码, 手机号, 验证码"
 // @Success 200 {object} response.Response{data=types.UserLoginResponse,msg=string,code=int} "返回包括用户信息,token,过期时间"
 // @Router /user/login [post]
 func (u *UserApi) UserLogin(c *gin.Context) {
@@ -88,7 +88,7 @@ func creatToken(user system.User) string {
 // @Summary 用户注册
 // @Description
 // @Produce   application/json
-// @Param    data  body      types.UserRegister  true  "注册信息"
+// @Param    data  body  types.UserRegisterRequest  true  "注册信息"
 // @Success 200 {object} response.Response{msg=string,code=int}
 // @Router /user/register [post]
 func (u *UserApi) UserRegister(c *gin.Context) {
@@ -211,7 +211,7 @@ func (u *UserApi) ChangeUserPhone(c *gin.Context) {
 // @Description 找回密码
 // @Accept    application/json
 // @Produce   application/json
-// @Param    data  body  types.UserUpdate  true  "用户更新信息"
+// @Param    data  body  types.RecoverUserPasswordRequest  true  "找回密码"
 // @Success 200 {object} response.Response{code=int,msg=string}
 // @Router /user/recoverpwd [put]
 func (u *UserApi) RecoverUserPassword(c *gin.Context) {
@@ -247,7 +247,7 @@ func (u *UserApi) RecoverUserPassword(c *gin.Context) {
 // @Description 更新用户信息
 // @Accept    application/json
 // @Produce   application/json
-// @Param    data  body  types.UserUpdate  true  "用户更新信息"
+// @Param    data  body  types.UserUpdateInfoRequest  true  "用户更新信息"
 // @Success 200 {object} response.Response{code=int,msg=string}
 // @Router /user/info [put]
 func (u *UserApi) UpdateUserInfo(c *gin.Context) {

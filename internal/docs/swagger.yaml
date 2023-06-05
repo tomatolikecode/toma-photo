@@ -1,56 +1,4 @@
 definitions:
-  request.UserLogin:
-    properties:
-      loginType:
-        description: 手机验证码或账号密码
-        example: 登录类型 必填,phone/account
-        type: string
-      password:
-        description: 账户密码登录, 密码
-        example: 密码
-        type: string
-      phone:
-        description: 手机号验证码登录, 手机号码
-        example: 手机号
-        type: string
-      phoneCode:
-        description: 手机验证码登录, 验证码
-        example: 手机验证码
-        type: string
-      username:
-        description: 账户密码登录, 用户名, 用户名支持手机号密码登录
-        example: 用户名
-        type: string
-    required:
-    - loginType
-    type: object
-  request.UserRegister:
-    properties:
-      headerImg:
-        example: 头像链接
-        type: string
-      nickName:
-        example: 昵称
-        type: string
-      passWord:
-        example: 密码
-        type: string
-      phone:
-        example: 电话号码, 必填
-        type: string
-      phoneCode:
-        description: 手机验证码登录, 验证码
-        example: 手机号验证码
-        type: string
-      username:
-        example: 用户名
-        type: string
-    required:
-    - passWord
-    - phone
-    - phoneCode
-    - username
-    type: object
   response.Response:
     properties:
       code:
@@ -58,18 +6,6 @@ definitions:
       data: {}
       msg:
         type: string
-    type: object
-  response.UserInfoResponse:
-    properties:
-      user:
-        $ref: '#/definitions/system.User'
-    type: object
-  response.UserLoginResponse:
-    properties:
-      token:
-        type: string
-      user:
-        $ref: '#/definitions/system.User'
     type: object
   system.User:
     properties:
@@ -120,6 +56,137 @@ definitions:
       username:
         type: string
     type: object
+  types.ChangeUserPasswordRequest:
+    properties:
+      changeType:
+        example: 修改类型, 原密码修改(password), 手机验证码修改(phone)
+        type: string
+      newPassword:
+        example: 新密码
+        type: string
+      newPasswordAgain:
+        example: 新密码确认
+        type: string
+      oldPassword:
+        example: 旧密码
+        type: string
+      phoneCode:
+        example: 手机号验证码
+        type: string
+    type: object
+  types.ChangeUserPhoneRequest:
+    properties:
+      newPhone:
+        example: 新手机号码
+        type: string
+      newPhoneCode:
+        example: 新手机验证码
+        type: string
+      oldPhoneCode:
+        example: 旧手机的验证码
+        type: string
+    type: object
+  types.RecoverUserPasswordRequest:
+    properties:
+      newPassword:
+        example: 新密码
+        type: string
+      newPasswordAgain:
+        example: 新密码确认
+        type: string
+      phone:
+        example: 手机号
+        type: string
+      phoneCode:
+        example: 手机号验证码
+        type: string
+    type: object
+  types.UserInfoResponse:
+    properties:
+      user:
+        $ref: '#/definitions/system.User'
+    type: object
+  types.UserLoginRequest:
+    properties:
+      loginType:
+        description: 手机验证码或账号密码
+        example: 登录类型 必填,phone/account
+        type: string
+      password:
+        description: 账户密码登录, 密码
+        example: 密码
+        type: string
+      phone:
+        description: 手机号验证码登录, 手机号码
+        example: 手机号
+        type: string
+      phoneCode:
+        description: 手机验证码登录, 验证码
+        example: 手机验证码
+        type: string
+      username:
+        description: 账户密码登录, 用户名, 用户名支持手机号密码登录
+        example: 用户名
+        type: string
+    required:
+    - loginType
+    type: object
+  types.UserLoginResponse:
+    properties:
+      token:
+        type: string
+      user:
+        $ref: '#/definitions/system.User'
+    type: object
+  types.UserRegisterRequest:
+    properties:
+      headerImg:
+        example: 头像链接
+        type: string
+      nickName:
+        example: 昵称
+        type: string
+      passWord:
+        example: 密码
+        type: string
+      phone:
+        example: 电话号码, 必填
+        type: string
+      phoneCode:
+        description: 手机验证码登录, 验证码
+        example: 手机号验证码
+        type: string
+      username:
+        example: 用户名
+        type: string
+    required:
+    - passWord
+    - phone
+    - phoneCode
+    - username
+    type: object
+  types.UserUpdateInfoRequest:
+    properties:
+      city:
+        example: 四川
+        type: string
+      country:
+        example: 中国
+        type: string
+      headerImg:
+        example: 头像链接
+        type: string
+      nickName:
+        description: ID        uint   `json:"-"`
+        example: 这是昵称
+        type: string
+      province:
+        example: 成都
+        type: string
+      sex:
+        example: 1
+        type: integer
+    type: object
 info:
   contact: {}
 paths:
@@ -145,6 +212,64 @@ paths:
       summary: 发送短信验证码
       tags:
       - 基本模块
+  /user/changephone:
+    put:
+      consumes:
+      - application/json
+      description: 更换用户手机号, 原手机号验证修改
+      parameters:
+      - description: 更换手机号
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/types.ChangeUserPhoneRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                code:
+                  type: integer
+                msg:
+                  type: string
+              type: object
+      summary: 更换手机号
+      tags:
+      - 用户模块
+  /user/changepwd:
+    put:
+      consumes:
+      - application/json
+      description: 修改用户密码, 通过手机号验证码修改, 通过原密码新密码验证修改
+      parameters:
+      - description: 修改密码
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/types.ChangeUserPasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                code:
+                  type: integer
+                msg:
+                  type: string
+              type: object
+      summary: 修改密码
+      tags:
+      - 用户模块
   /user/info:
     get:
       consumes:
@@ -162,11 +287,39 @@ paths:
                 code:
                   type: integer
                 data:
-                  $ref: '#/definitions/response.UserInfoResponse'
+                  $ref: '#/definitions/types.UserInfoResponse'
                 msg:
                   type: string
               type: object
       summary: 获取用户信息
+      tags:
+      - 用户模块
+    put:
+      consumes:
+      - application/json
+      description: 更新用户信息
+      parameters:
+      - description: 用户更新信息
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/types.UserUpdateInfoRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                code:
+                  type: integer
+                msg:
+                  type: string
+              type: object
+      summary: 更新用户信息
       tags:
       - 用户模块
   /user/login:
@@ -178,7 +331,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.UserLogin'
+          $ref: '#/definitions/types.UserLoginRequest'
       produces:
       - application/json
       responses:
@@ -191,7 +344,7 @@ paths:
                 code:
                   type: integer
                 data:
-                  $ref: '#/definitions/response.UserLoginResponse'
+                  $ref: '#/definitions/types.UserLoginResponse'
                 msg:
                   type: string
               type: object
@@ -242,6 +395,35 @@ paths:
       summary: 用户退出登录
       tags:
       - 用户模块
+  /user/recoverpwd:
+    put:
+      consumes:
+      - application/json
+      description: 找回密码
+      parameters:
+      - description: 找回密码
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/types.RecoverUserPasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                code:
+                  type: integer
+                msg:
+                  type: string
+              type: object
+      summary: 找回密码
+      tags:
+      - 用户模块
   /user/register:
     post:
       parameters:
@@ -250,7 +432,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.UserRegister'
+          $ref: '#/definitions/types.UserRegisterRequest'
       produces:
       - application/json
       responses:
