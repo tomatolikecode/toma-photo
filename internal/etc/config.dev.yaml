@@ -14,7 +14,7 @@ mysql:
   path: "43.139.116.74"
   port: "3306"
   config: "charset=utf8mb4&parseTime=True&loc=Local"
-  db-name: "toma-photo"
+  db-name: "toma_photo"
   username: "root"
   password: "fanqie"
   max-idle-conns: 10

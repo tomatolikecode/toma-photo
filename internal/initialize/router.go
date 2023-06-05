@@ -5,6 +5,7 @@ import (
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/toma-photo/internal/docs"
+	"github.com/toma-photo/internal/middleware"
 
 	"github.com/toma-photo/internal/global"
 	"github.com/toma-photo/internal/router"
@@ -12,25 +13,33 @@ import (
 
 func Routers() *gin.Engine {
 	Router := gin.Default()
+
 	// 初始化 swagger 服务
-	swaggerServer(Router)
+	initSwaggerServer(Router)
 
 	// Router Server
-	basicRouter := router.RouterGroupApp.Basic
+	basicRouters := router.RouterGroupApp.Basic
+	systemRouters := router.RouterGroupApp.System
 
 	publicGroup := Router.Group(global.CONFIG.System.RouterPrefix)
 	{
-		basicRouter.HealthRouter.InitAPiRouter(publicGroup) // 健康监测
+		basicRouters.InitAPiRouter(publicGroup) // 健康监测
+		systemRouters.InitBasicRouter(publicGroup)
+		systemRouters.InitUserRouterWithOutJwt(publicGroup)
 	}
 
-	// privateGroup := router.Group(global.CONFIG.System.RouterPrefix)
-	// PrivateGroup.Use(middleware.JWTAuth()).Use(middleware.CasbinHandler())
+	privateGroup := Router.Group(global.CONFIG.System.RouterPrefix)
+	privateGroup.Use(middleware.JWTAuth())
+	{
+		systemRouters.InitUserRouter(privateGroup)
+	}
+
 	global.ZAP_LOG.Info("router register success")
 	return Router
 }
 
 // 初始化 swagger 服务, 只有在非发版服务才开启swagger
-func swaggerServer(Router *gin.Engine) {
+func initSwaggerServer(Router *gin.Engine) {
 	switch gin.Mode() {
 	case gin.ReleaseMode:
 		return

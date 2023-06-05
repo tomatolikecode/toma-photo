@@ -20,6 +20,410 @@
                     }
                 }
             }
+        },
+        "/sms": {
+            "get": {
+                "description": "短信验证码",
+                "tags": [
+                    "基本模块"
+                ],
+                "summary": "发送短信验证码",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/info": {
+            "get": {
+                "description": "获取用户信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户模块"
+                ],
+                "summary": "获取用户信息",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer"
+                                        },
+                                        "data": {
+                                            "$ref": "#/definitions/response.UserInfoResponse"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/user/login": {
+            "post": {
+                "description": "用户登录, 账号密码登录, 手机验证码注册登录",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户模块"
+                ],
+                "summary": "用户登录",
+                "parameters": [
+                    {
+                        "description": "登录类型, 用户名, 密码, 手机号, 验证码",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UserLogin"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返回包括用户信息,token,过期时间",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer"
+                                        },
+                                        "data": {
+                                            "$ref": "#/definitions/response.UserLoginResponse"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/user/logoff": {
+            "delete": {
+                "description": "注销",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户模块"
+                ],
+                "summary": "用户注销",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/user/logout": {
+            "delete": {
+                "description": "退出登录",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户模块"
+                ],
+                "summary": "用户退出登录",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/user/register": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户模块"
+                ],
+                "summary": "用户注册",
+                "parameters": [
+                    {
+                        "description": "注册信息",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UserRegister"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "request.UserLogin": {
+            "type": "object",
+            "required": [
+                "loginType"
+            ],
+            "properties": {
+                "loginType": {
+                    "description": "手机验证码或账号密码",
+                    "type": "string",
+                    "example": "登录类型 必填,phone/account"
+                },
+                "password": {
+                    "description": "账户密码登录, 密码",
+                    "type": "string",
+                    "example": "密码"
+                },
+                "phone": {
+                    "description": "手机号验证码登录, 手机号码",
+                    "type": "string",
+                    "example": "手机号"
+                },
+                "phoneCode": {
+                    "description": "手机验证码登录, 验证码",
+                    "type": "string",
+                    "example": "手机验证码"
+                },
+                "username": {
+                    "description": "账户密码登录, 用户名, 用户名支持手机号密码登录",
+                    "type": "string",
+                    "example": "用户名"
+                }
+            }
+        },
+        "request.UserRegister": {
+            "type": "object",
+            "required": [
+                "passWord",
+                "phone",
+                "phoneCode",
+                "username"
+            ],
+            "properties": {
+                "headerImg": {
+                    "type": "string",
+                    "example": "头像链接"
+                },
+                "nickName": {
+                    "type": "string",
+                    "example": "昵称"
+                },
+                "passWord": {
+                    "type": "string",
+                    "example": "密码"
+                },
+                "phone": {
+                    "type": "string",
+                    "example": "电话号码, 必填"
+                },
+                "phoneCode": {
+                    "description": "手机验证码登录, 验证码",
+                    "type": "string",
+                    "example": "手机号验证码"
+                },
+                "username": {
+                    "type": "string",
+                    "example": "用户名"
+                }
+            }
+        },
+        "response.Response": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {},
+                "msg": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.UserInfoResponse": {
+            "type": "object",
+            "properties": {
+                "user": {
+                    "$ref": "#/definitions/system.User"
+                }
+            }
+        },
+        "response.UserLoginResponse": {
+            "type": "object",
+            "properties": {
+                "token": {
+                    "type": "string"
+                },
+                "user": {
+                    "$ref": "#/definitions/system.User"
+                }
+            }
+        },
+        "system.User": {
+            "type": "object",
+            "properties": {
+                "allVolume": {
+                    "type": "integer"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "country": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "displayAllVolume": {
+                    "type": "string"
+                },
+                "displayUsedVolume": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "enableAiPhotoFace": {
+                    "type": "boolean"
+                },
+                "enableAiPhotoLabel": {
+                    "type": "boolean"
+                },
+                "headerImg": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "loginAt": {
+                    "type": "integer"
+                },
+                "nickName": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "province": {
+                    "type": "string"
+                },
+                "registerType": {
+                    "type": "string"
+                },
+                "sex": {
+                    "type": "integer"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "usedVolume": {
+                    "type": "integer"
+                },
+                "usedVolumePercent": {
+                    "type": "number"
+                },
+                "userUID": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
         }
     }
 }

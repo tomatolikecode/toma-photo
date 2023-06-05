@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/toma-photo/internal/global"
+	"github.com/toma-photo/internal/models/system"
 	"go.uber.org/zap"
 )
 
@@ -11,7 +12,8 @@ import (
 func MigrateTables() {
 	db := global.DB()
 	err := db.AutoMigrate(
-	// 系统表
+		// 系统表
+		system.User{},
 	)
 	if err != nil {
 		global.ZAP_LOG.Error("register table failed", zap.Error(err))
